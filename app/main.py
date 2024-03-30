@@ -25,24 +25,27 @@ def shop_trip() -> None:
             )
         )
         print(f"{customer.name} has {customer.money} dollars")
-        for shop in shops_date:
-            shop = Shop(
-                shop["name"],
-                shop["location"],
-                shop["products"]
-            )
-            costs = shop.costs_for_trip_to_shop(customer, gas_station.price)
-            customer.add_shop_cost(costs, shop)
-            print(f"{customer}'s trip to the {shop} costs {costs}")
 
-        if not customer.enough_money():
+        # Calculate the cost of the trip to each shop
+        costs = {}
+        for shop in shops_date:
+            shop = Shop(**shop)
+            cost = customer.costs_for_trip_to_shop(shop, gas_station.price)
+            costs[cost] = shop
+            print(f"{customer}'s trip to the {shop} costs {cost}")
+
+        if not customer.enough_money(min(costs)):
             break
-        print(f"{customer} rides to {customer.costs[1]}\n")
-        print("Date: 04/01/2021 12:33:41")
-        print(f"Thanks, {customer}, for your purchase!")
-        print(customer.get_receipts() + "\n")
-        print(f"{customer} rides home")
-        print(f"{customer} now has {customer.calculate_wallet()} dollars\n")
+        cheapest_shop = costs[min(costs)]
+        print(f"""{customer} rides to {cheapest_shop}
+
+Date: 04/01/2021 12:33:41
+Thanks, {customer}, for your purchase!
+{customer.get_receipts(cheapest_shop)}
+
+{customer} rides home
+{customer} now has {customer.calculate_wallet(min(costs))} dollars
+""")
 
 
 if __name__ == "__main__":
