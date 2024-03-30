@@ -35,7 +35,7 @@ def shop_trip() -> None:
             customer.shop = (costs, shop)
             print(f"{customer}'s trip to the {shop} costs {costs}")
 
-        if not customer.check_money():
+        if not customer.enough_money():
             break
         print(f"{customer} rides to {customer.shop[1]}\n")
         print("Date: 04/01/2021 12:33:41")

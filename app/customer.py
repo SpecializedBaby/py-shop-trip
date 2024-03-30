@@ -22,9 +22,10 @@ class Customer:
     def __str__(self) -> str:
         return self.name
 
-    def check_money(self) -> bool:
+    def enough_money(self) -> bool:
         if self.money < self.shop[0]:
-            print(f"{self} doesn't have enough money to make a purchase in any shop")
+            print(f"{self} doesn't have enough money "
+                  f"to make a purchase in any shop")
             return False
         return True
 
