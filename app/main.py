@@ -32,12 +32,12 @@ def shop_trip() -> None:
                 shop["products"]
             )
             costs = shop.costs_for_trip_to_shop(customer, gas_station.price)
-            customer.shop = (costs, shop)
+            customer.add_shop_cost(costs, shop)
             print(f"{customer}'s trip to the {shop} costs {costs}")
 
         if not customer.enough_money():
             break
-        print(f"{customer} rides to {customer.shop[1]}\n")
+        print(f"{customer} rides to {customer.costs[1]}\n")
         print("Date: 04/01/2021 12:33:41")
         print(f"Thanks, {customer}, for your purchase!")
         print(customer.get_receipts() + "\n")

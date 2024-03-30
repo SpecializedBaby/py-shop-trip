@@ -10,38 +10,36 @@ class Customer:
             location: list,
             money: int,
             car: Car,
-            shop: dict[float: Shop] = None
+            costs: dict[float: Shop] = None
     ) -> None:
         self.name = name
         self.product_cart = product_cart
         self.location = location
         self.money = money
         self.car = car
-        self._shop = shop if shop else {}
+        self._costs = costs if costs else {}
 
     def __str__(self) -> str:
         return self.name
 
     def enough_money(self) -> bool:
-        if self.money < self.shop[0]:
+        if self.money < self.costs[0]:
             print(f"{self} doesn't have enough money "
                   f"to make a purchase in any shop")
             return False
         return True
 
     def get_receipts(self) -> str:
-        return self.shop[1].receipts(self)
+        return self.costs[1].receipts(self)
 
     def calculate_wallet(self) -> float:
-        self.money -= self.shop[0]
+        self.money -= self.costs[0]
         return round(self.money, 2)
 
     @property
-    def shop(self) -> tuple[float, Shop]:
-        min_cost = min(self._shop.keys())
-        return min_cost, self._shop[min_cost]
+    def costs(self) -> tuple[float, Shop]:
+        min_cost = min(self._costs.keys())
+        return min_cost, self._costs[min_cost]
 
-    @shop.setter
-    def shop(self, cost_shop_pair: tuple[float, Shop]) -> None:
-        cost, shop = cost_shop_pair
-        self._shop[cost] = shop
+    def add_shop_cost(self, cost: float, shop: Shop) -> None:
+        self._costs[cost] = shop

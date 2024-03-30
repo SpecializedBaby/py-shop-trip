@@ -1,3 +1,5 @@
+import math
+
 from typing import Any
 
 
@@ -53,6 +55,7 @@ class Shop:
         return (self._calculate_distance(location) * fuel_consumption) / 100
 
     def _calculate_distance(self, customer_location: list) -> float:
-        distance_squared = ((self.location[0] - customer_location[0]) ** 2
-                            + (self.location[1] - customer_location[1]) ** 2)
-        return distance_squared ** 0.5
+        return math.hypot(
+            self.location[0] - customer_location[0],
+            self.location[1] - customer_location[1]
+        )
