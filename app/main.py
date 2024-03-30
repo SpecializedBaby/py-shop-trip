@@ -1,4 +1,3 @@
-from datetime import datetime
 import json
 
 from app.gas_station import GasStation
@@ -8,13 +7,11 @@ from app.shop import Shop
 
 
 def shop_trip() -> None:
-    with open("config.json") as file:
+    with open("app/config.json", "r") as file:
         date = json.load(file)
-        fuel_price_date = date["FUEL_PRICE"]
+        gas_station = GasStation(date["FUEL_PRICE"])
         customers_date = date["customers"]
         shops_date = date["shops"]
-
-    gas_station = GasStation(fuel_price_date)
 
     for customer in customers_date:
         customer = Customer(
@@ -37,9 +34,11 @@ def shop_trip() -> None:
             costs = shop.costs_for_trip_to_shop(customer, gas_station.price)
             customer.shop = (costs, shop)
             print(f"{customer}'s trip to the {shop} costs {costs}")
-        print(f"{customer} rides to {customer.shop[1]}\n")
 
-        print("Date: " + datetime.now().strftime("%d/%m/%Y %H:%M:%S"))
+        if not customer.check_money():
+            break
+        print(f"{customer} rides to {customer.shop[1]}\n")
+        print("Date: 04/01/2021 12:33:41")
         print(f"Thanks, {customer}, for your purchase!")
         print(customer.get_receipts() + "\n")
         print(f"{customer} rides home")

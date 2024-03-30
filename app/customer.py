@@ -22,12 +22,18 @@ class Customer:
     def __str__(self) -> str:
         return self.name
 
+    def check_money(self) -> bool:
+        if self.money < self.shop[0]:
+            print(f"{self} doesn't have enough money to make a purchase in any shop")
+            return False
+        return True
+
     def get_receipts(self) -> str:
         return self.shop[1].receipts(self)
 
     def calculate_wallet(self) -> float:
         self.money -= self.shop[0]
-        return round(self.money)
+        return round(self.money, 2)
 
     @property
     def shop(self) -> tuple[float, Shop]:
