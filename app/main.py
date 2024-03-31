@@ -37,15 +37,15 @@ def shop_trip() -> None:
         if not customer.enough_money(min(costs)):
             break
         cheapest_shop = costs[min(costs)]
-        print(f"""{customer} rides to {cheapest_shop}
-
-Date: 04/01/2021 12:33:41
-Thanks, {customer}, for your purchase!
-{customer.get_receipts(cheapest_shop)}
-
-{customer} rides home
-{customer} now has {customer.calculate_wallet(min(costs))} dollars
-""")
+        print(
+            f"{customer} rides to {cheapest_shop}\n\n"
+            f"Date: 04/01/2021 12:33:41\n"
+            f"Thanks, {customer}, for your purchase!\n"
+            f"{customer.get_receipts(cheapest_shop)}\n\n"
+            f"{customer} rides home\n"
+            f"{customer} now has "
+            f"{customer.calculate_wallet(min(costs))} dollars\n"
+        )
 
 
 if __name__ == "__main__":
